@@ -32,10 +32,10 @@ sub execute {
             return $acc;
         }
         if ($pc < 0 || $pc > @program) { # try to execute instruction out of range
-            return 0;
+            return undef;
         }
         if ($execed{$pc}) { # infinite loop
-            return 0;
+            return undef;
         }
 
         my $cmd = $program[$pc];
