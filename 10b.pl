@@ -7,31 +7,14 @@ use List::Util qw(max);
 
 my $n = 0;
 
-my %got = (0 => 1);
-
 chomp(my @joltages = <>);
-$got{$_} = 1 for @joltages;
 
 my $max = max(@joltages);
-$got{$max+3} = 1;
 
-my %jescache;
-
-print dfs(0), "\n";
-
-sub dfs {
-    my ($j) = @_;
-
-    no warnings 'recursion';
-
-    return 1 if $j == $max+3;
-    return 0 if !$got{$j};
-
-    if (!$jescache{$j}) {
-        my $n = dfs($j+1) + dfs($j+2) + dfs($j+3);
-        %jescache = () if keys %jescache > 100000;
-        $jescache{$j} = $n;
-    }
-
-    return $jescache{$j};
+my %dp;
+$dp{$max+3} = 1;
+for my $j (sort { $b <=> $a } (0, @joltages)) {
+    $dp{$j} = ($dp{$j+1}||0) + ($dp{$j+2}||0) + ($dp{$j+3}||0);
 }
+
+print $dp{0}, "\n";
