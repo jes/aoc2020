@@ -17,7 +17,8 @@ while (<>) {
     };
 }
 
-print execute(@program), "\n";
+my $r = execute(@program);
+print "$r\n" if defined $r;
 
 sub execute {
     my (@program) = @_;
