@@ -11,8 +11,9 @@ my %said;
 
 $said{$nums[$_]} = [0,$_,1] for (0..$#nums);
 
-for my $i (@nums..30000000) {
-    my $last = $nums[$#nums];
+my $last = $nums[$#nums];
+
+for my $i (@nums..29999999) {
     my ($prevspoken, $lastspoken, $timesspoken) = @{ $said{$last} };
     my $num;
     if ($timesspoken == 1) {
@@ -23,7 +24,7 @@ for my $i (@nums..30000000) {
 
     ($prevspoken, $lastspoken, $timesspoken) = @{ $said{$num}||[0,0,0] };
     $said{$num} = [$lastspoken, $i,$timesspoken+1];
-    push @nums, $num;
+    $last = $num;
 }
 
-print $nums[29999999], "\n";
+print $last, "\n";
