@@ -76,7 +76,6 @@ sub dfs {
 
         for my $f (keys %fields) {
             if ($f =~ /departure/) {
-                my @keys = keys %{ $fieldcanbe{$f} };
                 my $id = (keys %{ $fieldcanbe{$f} })[0];
                 $n *= $myticket[$id];
             }
@@ -89,8 +88,7 @@ sub dfs {
 
         my %newfcb;
         for my $nf (keys %fieldcanbe) {
-            my $href = $fieldcanbe{$nf};
-            $newfcb{$nf} = {%$href};
+            $newfcb{$nf} = {%{ $fieldcanbe{$nf} }};
             delete $newfcb{$nf}{$i};
         }
         $newfcb{$f} = {$i=>1};
