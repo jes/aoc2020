@@ -28,18 +28,18 @@ sub evaluate {
 
     my @parts = split /\s+/, $expr;
 
-    my @parts2 = ($parts[0]);
+    my @multiply = ($parts[0]);
 
     # addition
     for (my $i = 2; $i < @parts; $i += 2) {
         if ($parts[$i-1] eq '+') {
-            my $r = eval("$parts2[$#parts2] $parts[$i-1] $parts[$i]");
-            pop @parts2;
-            push @parts2, $r;
+            my $r = eval("$multiply[$#multiply] $parts[$i-1] $parts[$i]");
+            pop @multiply;
+            push @multiply, $r;
         } else {
-            push @parts2, $parts[$i-1], $parts[$i];
+            push @multiply, $parts[$i];
         }
     }
 
-    return eval(join('',@parts2));
+    return eval(join('*',@multiply));
 }
