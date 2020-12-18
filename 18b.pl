@@ -41,12 +41,5 @@ sub evaluate {
         }
     }
 
-    my $r = $parts2[0];
-
-    # multiplication
-    for (my $i = 2; $i < @parts2; $i += 2) {
-        $r = eval("$r $parts2[$i-1] $parts2[$i]");
-    }
-
-    return $r;
+    return eval(join('',@parts2));
 }
