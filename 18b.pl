@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use List::Util qw(min max sum);
+use List::Util qw(product);
 
 my $n = 0;
 
@@ -33,13 +33,13 @@ sub evaluate {
     # addition
     for (my $i = 2; $i < @parts; $i += 2) {
         if ($parts[$i-1] eq '+') {
-            my $r = eval("$multiply[$#multiply] $parts[$i-1] $parts[$i]");
-            pop @multiply;
+            my $last = pop @multiply;
+            my $r = $last + $parts[$i];
             push @multiply, $r;
         } else {
             push @multiply, $parts[$i];
         }
     }
 
-    return eval(join('*',@multiply));
+    return product(@multiply);
 }
