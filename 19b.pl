@@ -43,11 +43,7 @@ my $cp = 0;
 while (<>) {
     chomp;
     @chars = split //;
-    $cp = 0;
-    if (bigmatch()) {
-        $n++ if $cp == @chars;
-    } else {
-    }
+    $n++ if bigmatch();
 }
 
 print "$n\n";
