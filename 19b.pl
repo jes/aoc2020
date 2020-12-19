@@ -79,9 +79,7 @@ sub match {
         }
     } elsif ($rule{$r}{type} eq 'terminal') {
         return 0 if $cp >= @chars;
-        if ($chars[$cp++] eq $rule{$r}{char}) {
-            return 1;
-        }
+        return 1 if $chars[$cp++] eq $rule{$r}{char};
     }
 
     return 0;
