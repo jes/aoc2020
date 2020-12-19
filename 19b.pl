@@ -39,13 +39,11 @@ while (<>) {
 
 my @chars;
 my $cp = 0;
-my $maxcp;
 
 while (<>) {
     chomp;
     @chars = split //;
     $cp = 0;
-    $maxcp = 0;
     if (bigmatch()) {
         $n++ if $cp == @chars;
     } else {
@@ -56,10 +54,9 @@ print "$n\n";
 
 # check if @chars matches some number of rule 42 followed by some smaller number of rule 31
 sub bigmatch {
-    my $orig_cp = $cp;
     LOOP:
     for my $n (1 .. @chars) {
-        $cp = $orig_cp;
+        $cp = 0;
         for my $i (1..$n) {
             next LOOP if !match(42);
         }
@@ -83,7 +80,6 @@ sub match {
     } elsif ($rule{$r}{type} eq 'terminal') {
         return 0 if $cp >= @chars;
         if ($chars[$cp++] eq $rule{$r}{char}) {
-            $maxcp = $cp if $cp > $maxcp;
             return 1;
         }
     }
