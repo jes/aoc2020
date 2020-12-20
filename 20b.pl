@@ -87,9 +87,7 @@ sub dfs {
         return;
     }
 
-    my $wantcommonedges = 5;
-    $wantcommonedges-- if $x == 0 || $x == 11;
-    $wantcommonedges-- if $y == 0 || $y == 11;
+    my $wantcommonedges = 5 - ($x == 0 || $x == 11) - ($y == 0 || $y == 11);
 
     my @candidates = keys %tile;
 
@@ -149,20 +147,14 @@ sub get_pixel {
     # 1 - rot90
     # 2 - rot180
     # 3 - rot270
-    # >= 4 - subtract 4 + invert y
 
-    if ($orientation >= 4) { # flip
+    # >= 4 - subtract 4 and invert y
+    if ($orientation >= 4) {
         $orientation -= 4;
         $y = $maxy-$y;
     }
 
-    if ($orientation == 1) {
-        ($x,$y) = ($maxy-$y,$x);
-    } elsif ($orientation == 2) {
-        ($x,$y) = ($maxy-$x,$maxy-$y);
-    } elsif ($orientation == 3) {
-        ($x,$y) = ($y,$maxy-$x);
-    }
+    ($x,$y) = ($maxy-$y,$x) for (1..$orientation);
 
     return $tile{$tileid}{"$y,$x"};
 }
